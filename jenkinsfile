@@ -3,20 +3,32 @@ pipeline {
     //defining environment variables
     environment {
         SONAR_HOME = 'C:\\Users\\Administrator\\Documents\\tools\\sonar-scanner\\bin'
+        REPO_NAME = 'https://github.com/Krithi752/html-sample-app-krithika.git'
+        BRANCH_NAME = 'master'
     }
 
-    stages {
+     stages {
         // stage1
-        stage('testing and verifying sonar-scanner command') {
+        stage('testing and verify of required  commands') {
             steps {
                 echo 'Hello World'
-                echo 'checking version'
-             // bat or pwsh
-             bat """
-             %SONAR_HOME%\\sonar-scanner --version
-             """
+                 // bat or pwsh
+                bat """
+                %SONAR_HOME%\\sonar-scanner --version
+                echo == checking docker ===>
+                docker version 
+                echo ==> java version ==>
+                java --version 
+                """
             }
         }
-    
+        // git checkout 
+        stage('taking code of github repo'){
+            steps {
+                echo 'clone repo to project'
+                git url: "${REPO_NAME}", branch: "${BRANCH_NAME}"
+            }
+        }
+     
     }
 }
