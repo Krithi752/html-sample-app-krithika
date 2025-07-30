@@ -5,7 +5,7 @@ pipeline {
         SONAR_HOME = 'C:\\Users\\Administrator\\Documents\\tools\\sonar-scanner\\bin'
         REPO_NAME = 'https://github.com/Krithi752/html-sample-app-krithika.git'
         BRANCH_NAME = 'master'
-        SONAR_TOKEN  = credentials('"krithika_day3_jenkins"')
+        SONAR_TOKEN  = credentials('"Krithika_token"')
         SONAR_PROJECT_KEY =  'krithika_day3_jenkins'
         SONAR_SERVER_NAME = 'krithika-sonarqube' // name we have configured under jenkins global confir
     }
