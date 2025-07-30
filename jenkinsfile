@@ -29,6 +29,16 @@ pipeline {
                 git url: "${REPO_NAME}", branch: "${BRANCH_NAME}"
             }
         }
+        stage('sast with sonar-scanner'){
+            steps {
+                echo 'wait for sonarscanner to finish'
+                bat """
+                %SONAR_HOME%\\sonar-scanner\
+                -D"sonar.projectKey=krithika_day3" \
+                -D"sonar.sources=." -D"sonar.host.url=http://13.203.151.240:9000" \
+                -D"sonar.token=sqp_ff23f7784d03695be0a1ea9d3f55523659f6ee7c"
+            }
+        }
      
     }
 }
