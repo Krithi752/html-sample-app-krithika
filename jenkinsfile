@@ -6,6 +6,7 @@ pipeline {
         REPO_NAME = 'https://github.com/Krithi752/html-sample-app-krithika.git'
         BRANCH_NAME = 'master'
         SONAR_TOKEN  = credentials('"Krithika_token"')
+        DOCKET_CRED = credentials('krithika_dockerhub')
         SONAR_PROJECT_KEY =  'krithika_day3_jenkins'
         SONAR_SERVER_NAME = 'krithika-sonarqube' // name we have configured under jenkins global confir
     }
@@ -61,7 +62,7 @@ pipeline {
                 echo 'starting docker build process'
                 // to use docker plugin using script 
                 script {
-                    def imageName  = "hello-world "
+                    def imageName  = "docker.io/krithislay/hello-world "
                     def imageTag   = "codev1"
                     docker.build("${imageName}:${imageTag}",".")
 
@@ -72,6 +73,24 @@ pipeline {
                 
             
         }
+            // pushing image  to dockerhub 
+            stage('Docker hub image push'){
+                steps{
+                    echo 'pushing image to docker hub'
+                    script {
+                        def imageName  = "krithislay/hello-world"
+                        def imageTag   = "codev1"
+                        def hubCred   = "${DOCKER_CREDS}"
+                        // calling jenkins pluing docker pipeline to push
+                        docker.withRegistry('https://registry.hub.docker.com',hubCred){
+                            docker.image(imageName + ":" + imageTag).push()
+                            // 
+
+                        }
+
+                    }
+                }
+            }
      
     }
 }
